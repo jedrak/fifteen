@@ -15,8 +15,9 @@ public:
     bool visited = false;
     std::string path;
     Node* neighbours[4]{};
+    int depth = 0;
     void initNeighbours(Puzzle p);
-    Node(std::string path);
+    Node(std::string path, int depth);
     Node();
     Node * getNeighbour(char c);
 };

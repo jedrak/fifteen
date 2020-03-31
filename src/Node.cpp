@@ -30,11 +30,11 @@ void Node::initNeighbours(Puzzle p) {
             default:
                 whichCmd = 3;
         }
-        neighbours[whichCmd] = new Node(path +c);
+        neighbours[whichCmd] = new Node(path +c, depth+1);
     }
 }
 
-Node::Node(std::string path) : path(std::move(path)){
+Node::Node(std::string path, int depth) : path(std::move(path)), depth(depth){
     this->neighbours[0] = nullptr;//new Node();
     this->neighbours[1] = nullptr;//new Node();
     this->neighbours[2] = nullptr;//new Node();

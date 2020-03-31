@@ -4,9 +4,12 @@
 
 #include <iostream>
 #include <utility>
+#include <chrono>
 #include "../include/BFS.h"
 
 std::string BFS::explore(Graph* graph) {
+    auto start = std::chrono::steady_clock::now();
+    stats.clear();
     queue.clear();
     queue.push_back(graph->root);
     Node* toProcess = graph->root;
@@ -15,19 +18,25 @@ std::string BFS::explore(Graph* graph) {
     while(!graph->puzzle->isSolved()){
 
         graph->puzzle->revertInput(toProcess->path);
-        //std::cout<<*graph->puzzle<<Puzzle::invChain(toProcess->path);
         toProcess = queue.front();
+        stats.numberOfProcessed++;
+        if(stats.maxDepth > toProcess->depth) stats.maxDepth = toProcess->depth;
         queue.pop_front();
         graph->puzzle->processInput(toProcess->path);
         toProcess->initNeighbours(graph->puzzle);
         for(auto c : checkingOrder){
-            if(toProcess->getNeighbour(c)) queue.push_back(toProcess->getNeighbour(c));
+            if(toProcess->getNeighbour(c))
+            {
+                queue.push_back(toProcess->getNeighbour(c));
+                stats.numberOfVisited++;
+            }
         }
-
-        //std::cout<<toProcess->path<<std::endl;
 
     }
     graph->puzzle->revertInput(toProcess->path);
+    stats.numberOfMoves = toProcess->path.size();
+    auto end = std::chrono::steady_clock::now();
+    stats.time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     return toProcess->path;
 }
 
