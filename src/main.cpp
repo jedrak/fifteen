@@ -2,6 +2,7 @@
 #include "../include/Puzzle.h"
 #include "../include/Graph.h"
 #include "../include/BFS.h"
+#include "../include/DFS.h"
 
 void produceSolutionFile(const std::string& name, const std::string& solution)
 {
@@ -24,14 +25,16 @@ void produceStatFile(const std::string& name, Stats stats)
 
 int main() {
 
-    auto p = new Puzzle("../res/4x4_08_00268.txt");
+    auto p = new Puzzle("../res/4x4_10_00001.txt");
     auto graph = new Graph(p);
-    auto bfs = new BFS("LDUR");
+    auto dfs = new DFS("DRLU");
     std::cout<<*p<<std::endl;
-    std::string solution = bfs->explore(graph);
+    std::string solution = dfs->explore(graph);
+    std::cout<<solution<<" "<<solution.size()<<std::endl;
     p->processInput(solution);
-    std::cout<<*p<<p->isSolved();
+    std::cout<<*p;
     produceSolutionFile("../sol/sol.txt", solution);
-    produceStatFile("../sol/stats.txt", bfs->stats);
+    produceStatFile("../sol/stats.txt", dfs->stats);
+    std::cout<<dfs->stats.maxDepth;
     return 0;
 }

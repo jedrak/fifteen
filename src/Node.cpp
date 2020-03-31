@@ -17,6 +17,7 @@ void Node::initNeighbours(Puzzle p) {
     std::string possibleMoves = p.possibleMoves();
     for(char c : possibleMoves){
         int whichCmd;
+
         switch (c){
             case 'L':
                 whichCmd = 0;
@@ -30,7 +31,7 @@ void Node::initNeighbours(Puzzle p) {
             default:
                 whichCmd = 3;
         }
-        neighbours[whichCmd] = new Node(path +c, depth+1);
+        if(!(Puzzle::invCmd(static_cast<Puzzle::Command>(path[path.size() - 1])) == c)) neighbours[whichCmd] = new Node(path +c, depth+1);
     }
 }
 

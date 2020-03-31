@@ -75,6 +75,7 @@ short* Puzzle::move(Puzzle::Command command) {
 void Puzzle::processInput(const std::string& input) {
     for(char c : input){
         move(static_cast<Puzzle::Command>(c));
+
     }
 
 }

@@ -1,31 +1,36 @@
 //
-// Created by jedra on 30.03.2020.
+// Created by jedra on 31.03.2020.
 //
 
-#include <iostream>
+
 #include <utility>
 #include <chrono>
-#include "../include/BFS.h"
+#include <iostream>
+#include "../include/DFS.h"
 
-std::string BFS::explore(Graph* graph) {
+DFS::DFS(std::string checkingOrder) : Strategy(std::move(checkingOrder), "dfs"){}
+
+std::string DFS::explore(Graph *graph) {
     auto start = std::chrono::steady_clock::now();
     stats.clear();
     queue.clear();
     queue.push_back(graph->root);
-    Node* toProcess = graph->root;
-    while(!graph->puzzle->isSolved()){
-
+    Node* toProcess =  graph->root;
+    while(!graph->puzzle->isSolved())
+    {
         graph->puzzle->revertInput(toProcess->path);
-        toProcess = queue.front();
+        toProcess = queue.back();
         stats.numberOfProcessed++;
         if(stats.maxDepth < toProcess->depth) stats.maxDepth = toProcess->depth;
-        queue.pop_front();
+        queue.pop_back();
         graph->puzzle->processInput(toProcess->path);
         toProcess->initNeighbours(graph->puzzle);
-        if(!toProcess->visited) {
+        if(!toProcess->visited)
+        {
             toProcess->visited = true;
-            for (auto c : checkingOrder) {
-                if (toProcess->getNeighbour(c)) {
+            for(auto c : checkingOrder){
+                if(toProcess->getNeighbour(c) && toProcess->getNeighbour(c)->depth< 12)
+                {
                     queue.push_back(toProcess->getNeighbour(c));
                     stats.numberOfVisited++;
                 }
@@ -38,5 +43,3 @@ std::string BFS::explore(Graph* graph) {
     stats.time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     return toProcess->path;
 }
-
-BFS::BFS(std::string checkingOrder) : Strategy(std::move(checkingOrder),"bfs") {}
