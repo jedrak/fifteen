@@ -28,7 +28,7 @@ public:
     Stats stats;
     Strategy(std::string checkingOrder, std::string strategyName);
 
-    virtual std::string explore(Graph* graph) = 0;
+    virtual std::string explore(Graph* graph) { throw -1; };
 };
 
 

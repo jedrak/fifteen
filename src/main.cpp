@@ -4,6 +4,14 @@
 #include "../include/BFS.h"
 #include "../include/DFS.h"
 
+#define Arguments 1
+
+bool char_cmp(const char* a, const char* b, uint8_t lenght)
+{
+    for (int i = 0; i < lenght; i++) if (a[i] != b[i]) return false;
+    return true;
+}
+
 void produceSolutionFile(const std::string& name, const std::string& solution)
 {
     std::fstream file;
@@ -20,21 +28,69 @@ void produceStatFile(const std::string& name, Stats stats)
     file.close();
 }
 
+int main(int argc, const char* argv[])
+{
+    Strategy* alg = nullptr;
 
+#if Arguments
+    // Read the arguments
+    if (argc < 6) {
+        std::cout << "Invalid argument count: " <<argc<<", expeced: 5" << std::endl;
+        return -1;
+    }
 
+    /// argv[1] == Algorithm type
+    if (char_cmp(argv[1], "bfs", 3))
+    {
+        /// argv[2] == Method "DRUL" .. itp
+        alg = new BFS(argv[2]);
+        //std::cout<<"BFS"<<std::endl;
+    }
+    else if (char_cmp(argv[1], "dfs", 3))
+    {
+        /// argv[2] == Method "DRUL" .. itp
+        alg = new DFS(argv[2]);
+        //std::cout<<"DFS"<<std::endl;
+    }
+    else if (char_cmp(argv[1], "astr", 4))
+    {
+        /// argv[2] == Method "manh" || "hamm"
+//        alg = new Astar(argv[2]);
+        //std::cout<<"A*"<<std::endl;
+    }
+    else
+    {
+        std::cout<<"Fail"<<std::endl;
+        return -3;
+    }
 
-int main() {
+    /// argv[3] == Puzzle
+    auto p = new Puzzle(argv[3]);
+#else
+    alg = new DFS("LURD");
+//    alg = new Astar("hamm");
+    auto p = new Puzzle("../res/4x4_01_00001.txt");
+#endif
+    std::cout<<"Puzzle:"<<*p<<std::endl;
 
-    auto p = new Puzzle("../res/4x4_10_00001.txt");
     auto graph = new Graph(p);
-    auto dfs = new DFS("DRLU");
-    std::cout<<*p<<std::endl;
-    std::string solution = dfs->explore(graph);
-    std::cout<<solution<<" "<<solution.size()<<std::endl;
+
+    std::string solution = alg->explore(graph);
+    std::cout<<"Solve: "<<solution<<", moves count: "<<solution.size()<<std::endl;
+
     p->processInput(solution);
     std::cout<<*p;
+
+    /// argv[4] == Solve File
+    /// argv[5] == Stats File
+#if Arguments
+    produceSolutionFile(argv[4], solution);
+    produceStatFile(argv[5], alg->stats);
+#else
     produceSolutionFile("../sol/sol.txt", solution);
-    produceStatFile("../sol/stats.txt", dfs->stats);
-    std::cout<<dfs->stats.maxDepth;
+    produceStatFile("../sol/stats.txt", alg->stats);
+#endif
+
+    std::cout<<std::endl<<"Max Depth: "<<alg->stats.maxDepth;
     return 0;
 }

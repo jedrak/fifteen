@@ -7,7 +7,6 @@
 #include "../include/Puzzle.h"
 
 std::ostream& operator<<(std::ostream &os, const Puzzle &data) {
-    os<<std::endl;
     //os<<" "<<data.w<<"  "<<data.h;
     for(int i = 0; i < data.w*data.h; i++)
     {
@@ -99,6 +98,7 @@ Puzzle::Puzzle(std::string path) {
         short i=-1, buff;
         while(file>>state[++i]) if(state[i] == 0) position = i;
     }
+    else throw -1;
 }
 
 Puzzle::Puzzle() {

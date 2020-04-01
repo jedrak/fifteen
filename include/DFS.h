@@ -12,7 +12,7 @@ class DFS : public Strategy
 {
 public:
     DFS(std::string checkingOrder);
-    std::string explore(Graph* graph);
+    std::string explore(Graph* graph) override;
 };
 
 
