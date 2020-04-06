@@ -1,3 +1,10 @@
-cmake-build-debug/
 .idea
+cmake-build-debug/
+
+.vscode
+build/
+
 res/
+res_all/
+
+sprawozdanie*
