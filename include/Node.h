@@ -22,7 +22,5 @@ public:
     Node * getNeighbour(char c);
 };
 
-// this['L']
-
 
 #endif //FIFTHTEEN_NODE_H

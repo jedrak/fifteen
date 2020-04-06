@@ -20,7 +20,6 @@ std::ostream& operator<<(std::ostream &os, const Puzzle &data) {
     return os;
 }
 
-
 bool Puzzle::isPossible(Puzzle::Command command) {
     bool result = false;
     switch(command){
@@ -76,7 +75,6 @@ void Puzzle::processInput(const std::string& input) {
         move(static_cast<Puzzle::Command>(c));
 
     }
-
 }
 
 std::string Puzzle::possibleMoves() {
@@ -120,8 +118,6 @@ bool Puzzle::isSolved() {
             return false;
         }
     }
-
-
     return true;
 }
 
@@ -131,7 +127,6 @@ Puzzle::Puzzle(short w, short h) : w(w), h(h), position((w*h)-1){
         state[i] = i+1;
     }
     state[position] = 0;
-
 }
 
 Puzzle::Puzzle(Puzzle * p) : w(p->w), h(p->h), position(p->position) {
@@ -173,7 +168,6 @@ std::string Puzzle::invChain(std::string input) {
     {
         result.push_back(Puzzle::invCmd(static_cast<Puzzle::Command>(input[i])));
     }
-
     return result;
 }
 

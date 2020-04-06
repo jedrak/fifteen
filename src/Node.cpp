@@ -31,7 +31,7 @@ void Node::initNeighbours(Puzzle p) {
             default:
                 whichCmd = 3;
         }
-        if(!(Puzzle::invCmd(static_cast<Puzzle::Command>(path[path.size() - 1])) == c)) neighbours[whichCmd] = new Node(path +c, depth+1);
+        if(!(Puzzle::invCmd(static_cast<Puzzle::Command>(path[path.size() - 1])) == c)) neighbours[whichCmd] = new Node(path+c, depth+1);
     }
 }
 
@@ -40,8 +40,6 @@ Node::Node(std::string path, int depth) : path(std::move(path)), depth(depth){
     this->neighbours[1] = nullptr;//new Node();
     this->neighbours[2] = nullptr;//new Node();
     this->neighbours[3] = nullptr;//new Node();
-
-
 }
 
 Node::Node() :path("") {
@@ -49,7 +47,6 @@ Node::Node() :path("") {
     this->neighbours[1] = nullptr;
     this->neighbours[2] = nullptr;
     this->neighbours[3] = nullptr;
-
 }
 
 Node *Node::getNeighbour(char c) {

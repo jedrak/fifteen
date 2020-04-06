@@ -3,8 +3,9 @@
 #include "../include/Graph.h"
 #include "../include/BFS.h"
 #include "../include/DFS.h"
+#include "../include/Astar.h"
 
-#define Arguments 1
+#define Arguments 0
 
 bool char_cmp(const char* a, const char* b, uint8_t lenght)
 {
@@ -55,7 +56,7 @@ int main(int argc, const char* argv[])
     else if (char_cmp(argv[1], "astr", 4))
     {
         /// argv[2] == Method "manh" || "hamm"
-//        alg = new Astar(argv[2]);
+        alg = new Astar(argv[2]);
         //std::cout<<"A*"<<std::endl;
     }
     else
@@ -67,9 +68,9 @@ int main(int argc, const char* argv[])
     /// argv[3] == Puzzle
     auto p = new Puzzle(argv[3]);
 #else
-    alg = new DFS("LURD");
-//    alg = new Astar("hamm");
-    auto p = new Puzzle("../res/4x4_01_00001.txt");
+    alg = new Astar("manh");
+    // alg = new Astar("hamm");
+    auto p = new Puzzle("../res/4x4_11_02048.txt");
 #endif
     std::cout<<"Puzzle:"<<*p<<std::endl;
 
@@ -81,9 +82,9 @@ int main(int argc, const char* argv[])
     p->processInput(solution);
     std::cout<<*p;
 
+#if Arguments
     /// argv[4] == Solve File
     /// argv[5] == Stats File
-#if Arguments
     produceSolutionFile(argv[4], solution);
     produceStatFile(argv[5], alg->stats);
 #else
