@@ -4,6 +4,8 @@ cmake-build-debug/
 .vscode
 build/
 
+sol/
+
 res/
 res_all/
 
