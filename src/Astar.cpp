@@ -70,17 +70,17 @@ std::string Astar::explore(Graph *graph) {
         queue.pop_front();
         graph->puzzle->processInput(toProcess->path);
         toProcess->initNeighbours(graph->puzzle);
+        graph->puzzle->revertInput(toProcess->path);
         if(!toProcess->visited)
         {
             toProcess->visited = true;
             Node* node = nullptr;
             std::list<Node*> temp;
-
-            for(auto c : "LURD") {
+            std::string s("LURD");
+            for(auto c : s) {
                 node = toProcess->getNeighbour(c);
                 if(node && node->depth < 12)
                 {
-                    graph->puzzle->revertInput(node->path);
                     graph->puzzle->processInput(node->path);
                     node->h = heuristic(graph->puzzle);
                     graph->puzzle->revertInput(node->path);
@@ -96,6 +96,8 @@ std::string Astar::explore(Graph *graph) {
                 queue.push_front(temp.back());
                 temp.pop_back();
             }
+
+            graph->puzzle->processInput(toProcess->path);
         }
     }
 
