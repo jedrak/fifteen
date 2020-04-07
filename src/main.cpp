@@ -77,7 +77,7 @@ int main(int argc, const char* argv[])
     auto graph = new Graph(p);
 
     std::string solution = alg->explore(graph);
-    std::cout<<"Solve: "<<solution<<", moves count: "<<solution.size()<<std::endl;
+    std::cout<<"Moves: "<<solution<<", moves count: "<<solution.size()<<std::endl;
 
     p->processInput(solution);
     std::cout<<*p;

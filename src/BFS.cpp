@@ -7,14 +7,16 @@
 #include <chrono>
 #include "../include/BFS.h"
 
+BFS::BFS(std::string checkingOrder) : Strategy(std::move(checkingOrder),"bfs") {}
+
 std::string BFS::explore(Graph* graph) {
     auto start = std::chrono::steady_clock::now();
     stats.clear();
     queue.clear();
     queue.push_back(graph->root);
     Node* toProcess = graph->root;
-    while(!graph->puzzle->isSolved()){
-
+    while(!graph->puzzle->isSolved())
+    {
         graph->puzzle->revertInput(toProcess->path);
         toProcess = queue.front();
         stats.numberOfProcessed++;
@@ -22,10 +24,13 @@ std::string BFS::explore(Graph* graph) {
         queue.pop_front();
         graph->puzzle->processInput(toProcess->path);
         toProcess->initNeighbours(graph->puzzle);
-        if(!toProcess->visited) {
+        if(!toProcess->visited)
+        {
             toProcess->visited = true;
-            for (auto c : checkingOrder) {
-                if (toProcess->getNeighbour(c)) {
+            for(auto c : checkingOrder)
+            {
+                if (toProcess->getNeighbour(c))
+                {
                     queue.push_back(toProcess->getNeighbour(c));
                     stats.numberOfVisited++;
                 }
@@ -38,5 +43,3 @@ std::string BFS::explore(Graph* graph) {
     stats.time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     return toProcess->path;
 }
-
-BFS::BFS(std::string checkingOrder) : Strategy(std::move(checkingOrder),"bfs") {}

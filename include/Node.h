@@ -16,6 +16,7 @@ public:
     std::string path;
     Node* neighbours[4]{};
     int depth = 0;
+    int h = 0;
     void initNeighbours(Puzzle p);
     Node(std::string path, int depth);
     Node();

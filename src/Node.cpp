@@ -2,16 +2,8 @@
 // Created by jedra on 30.03.2020.
 //
 
-#include "../include/Node.h"
-
 #include <utility>
-
-
-
-//std::string &Node::operator[](char) {
-//    return <#initializer#>;
-
-
+#include "../include/Node.h"
 
 void Node::initNeighbours(Puzzle p) {
     std::string possibleMoves = p.possibleMoves();
