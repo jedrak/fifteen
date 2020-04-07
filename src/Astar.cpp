@@ -61,6 +61,10 @@ std::string Astar::explore(Graph *graph) {
     else /*if(checkingOrder == "hamm")*/
         heuristic = &hammingDistance;
 
+    Node* node = nullptr;
+    std::list<Node*> temp;
+    std::string string("LURD"), ch("L");
+
     while(!graph->puzzle->isSolved())
     {
         graph->puzzle->revertInput(toProcess->path);
@@ -70,20 +74,18 @@ std::string Astar::explore(Graph *graph) {
         queue.pop_front();
         graph->puzzle->processInput(toProcess->path);
         toProcess->initNeighbours(graph->puzzle);
-        graph->puzzle->revertInput(toProcess->path);
         if(!toProcess->visited)
         {
             toProcess->visited = true;
-            Node* node = nullptr;
-            std::list<Node*> temp;
-            std::string s("LURD");
-            for(auto c : s) {
+
+            for(auto c : string) {
                 node = toProcess->getNeighbour(c);
                 if(node && node->depth < 12)
                 {
-                    graph->puzzle->processInput(node->path);
+                    ch[0] = c;
+                    graph->puzzle->processInput(ch);
                     node->h = heuristic(graph->puzzle);
-                    graph->puzzle->revertInput(node->path);
+                    graph->puzzle->revertInput(ch);
                     temp.push_back(node);
                     stats.numberOfVisited++;
                 }
@@ -96,8 +98,6 @@ std::string Astar::explore(Graph *graph) {
                 queue.push_front(temp.back());
                 temp.pop_back();
             }
-
-            graph->puzzle->processInput(toProcess->path);
         }
     }
 
