@@ -5,7 +5,7 @@
 #include "../include/DFS.h"
 #include "../include/Astar.h"
 
-#define Arguments 0
+#define Arguments 1
 
 bool char_cmp(const char* a, const char* b, uint8_t lenght)
 {
