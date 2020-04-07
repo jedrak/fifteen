@@ -9,13 +9,13 @@
 
 Astar::Astar(std::string method) : Strategy(std::move(method), "astr") {}
 
-/*struct NodeComparator
+struct NodeComparator
 {
     bool operator ()(const Node* node1, const Node* node2)
     {
         return node1->h < node2->h;
     }
-};*/
+};
 
 unsigned int hammingDistance(Puzzle* puzzle) {
     unsigned int misplaced = 0;
@@ -89,7 +89,7 @@ std::string Astar::explore(Graph *graph) {
                 }
             }
 
-//            temp.sort(NodeComparator());
+            temp.sort(NodeComparator());
 
             while(!temp.empty())
             {
