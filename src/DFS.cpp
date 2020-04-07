@@ -2,20 +2,19 @@
 // Created by jedra on 31.03.2020.
 //
 
-
 #include <utility>
 #include <chrono>
 #include <iostream>
 #include "../include/DFS.h"
 
-DFS::DFS(std::string checkingOrder) : Strategy(std::move(checkingOrder), "dfs"){}
+DFS::DFS(std::string checkingOrder) : Strategy(std::move(checkingOrder),"dfs") {}
 
-std::string DFS::explore(Graph *graph) {
+std::string DFS::explore(Graph* graph) {
     auto start = std::chrono::steady_clock::now();
     stats.clear();
     queue.clear();
     queue.push_back(graph->root);
-    Node* toProcess =  graph->root;
+    Node* toProcess = graph->root;
     while(!graph->puzzle->isSolved())
     {
         graph->puzzle->revertInput(toProcess->path);
@@ -28,7 +27,8 @@ std::string DFS::explore(Graph *graph) {
         if(!toProcess->visited)
         {
             toProcess->visited = true;
-            for(auto c : checkingOrder){
+            for(auto c : checkingOrder)
+            {
                 if(toProcess->getNeighbour(c) && toProcess->getNeighbour(c)->depth< 12)
                 {
                     queue.push_back(toProcess->getNeighbour(c));

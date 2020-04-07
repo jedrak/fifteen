@@ -11,12 +11,12 @@
 
 
 class Puzzle {
-
+public:
     short position = 15;
     short w = 4;
     short h = 4;
     short* state;
-public:
+
     enum Command{
         Left = 'L',
         Right = 'R',
@@ -42,4 +42,4 @@ public:
 };
 
 
-#endif //FIFTHT&EEN_PUZZLE_H
+#endif //FIFTHTEEN_PUZZLE_H

@@ -10,14 +10,12 @@ Strategy::Strategy(std::string checkingOrder, std::string strategyName) : checki
     stats = Stats();
 }
 
-
 void Stats::clear() {
     numberOfMoves = 0;
     numberOfVisited = 0;
     numberOfProcessed = 0;
     maxDepth = 0;
     time = 0;
-
 }
 
 std::ostream &operator<<(std::ostream &os, const Stats &data) {
