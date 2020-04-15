@@ -40,6 +40,6 @@ std::string BFS::explore(Graph* graph) {
     graph->puzzle->revertInput(toProcess->path);
     stats.numberOfMoves = toProcess->path.size();
     auto end = std::chrono::steady_clock::now();
-    stats.time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    stats.time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     return toProcess->path;
 }

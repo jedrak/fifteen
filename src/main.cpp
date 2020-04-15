@@ -5,7 +5,7 @@
 #include "../include/DFS.h"
 #include "../include/Astar.h"
 
-#define Arguments 1
+#define Arguments 0
 
 bool char_cmp(const char* a, const char* b, uint8_t lenght)
 {
@@ -23,6 +23,8 @@ void produceSolutionFile(const std::string& name, const std::string& solution)
 
 void produceStatFile(const std::string& name, Stats stats)
 {
+    std::cout << "\n" << stats;
+
     std::fstream file;
     file.open(name, std::ios::out);
     file<<stats;
@@ -68,9 +70,11 @@ int main(int argc, const char* argv[])
     /// argv[3] == Puzzle
     auto p = new Puzzle(argv[3]);
 #else
-    alg = new Astar("manh");
-    // alg = new Astar("hamm");
     auto p = new Puzzle("../res/4x4_11_02048.txt");
+    //alg = new BFS("LURD");
+    //alg = new DFS("LURD");
+    //alg = new Astar("hamm");
+    alg = new Astar("manh");   
 #endif
     std::cout<<"Puzzle:"<<*p<<std::endl;
 
@@ -91,7 +95,5 @@ int main(int argc, const char* argv[])
     produceSolutionFile("../sol/sol.txt", solution);
     produceStatFile("../sol/stats.txt", alg->stats);
 #endif
-
-    std::cout<<std::endl<<"Max Depth: "<<alg->stats.maxDepth;
     return 0;
 }

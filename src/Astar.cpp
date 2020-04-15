@@ -9,14 +9,6 @@
 
 Astar::Astar(std::string method) : Strategy(std::move(method), "astr") {}
 
-struct NodeComparator
-{
-    bool operator ()(const Node* node1, const Node* node2)
-    {
-        return node1->h < node2->h;
-    }
-};
-
 unsigned int hammingDistance(Puzzle* puzzle) {
     unsigned int misplaced = 0;
     const Puzzle solved = Puzzle(puzzle->w, puzzle->h);
@@ -51,8 +43,9 @@ std::string Astar::explore(Graph *graph) {
     auto start = std::chrono::steady_clock::now();
 
     stats.clear();
-    queue.clear();
-    queue.push_front(graph->root);
+    std::list<Node*> list;
+    list.push_front(graph->root);
+
     Node* toProcess = graph->root;
 
     unsigned int (*heuristic)(Puzzle*);
@@ -62,16 +55,15 @@ std::string Astar::explore(Graph *graph) {
         heuristic = &hammingDistance;
 
     Node* node = nullptr;
-    std::list<Node*> temp;
     std::string string("LURD"), ch("L");
 
     while(!graph->puzzle->isSolved())
     {
         graph->puzzle->revertInput(toProcess->path);
-        toProcess = queue.front();
+        toProcess = list.front();
+        list.pop_front();
         stats.numberOfProcessed++;
         if(stats.maxDepth < toProcess->depth) stats.maxDepth = toProcess->depth;
-        queue.pop_front();
         graph->puzzle->processInput(toProcess->path);
         toProcess->initNeighbours(graph->puzzle);
         if(!toProcess->visited)
@@ -86,18 +78,14 @@ std::string Astar::explore(Graph *graph) {
                     graph->puzzle->processInput(ch);
                     node->h = heuristic(graph->puzzle);
                     graph->puzzle->revertInput(ch);
-                    temp.push_back(node);
+                    list.push_front(node);
                     stats.numberOfVisited++;
                 }
             }
 
-            temp.sort(NodeComparator());
-
-            while(!temp.empty())
-            {
-                queue.push_front(temp.back());
-                temp.pop_back();
-            }
+            list.sort([](const Node* node1, const Node* node2) {
+                return node1->h + node1->depth < node2->h + node2->depth;
+            });
         }
     }
 
@@ -106,7 +94,7 @@ std::string Astar::explore(Graph *graph) {
     stats.numberOfMoves = toProcess->path.size();
 
     auto end = std::chrono::steady_clock::now();
-    stats.time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    stats.time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 
     return toProcess->path;
 }
