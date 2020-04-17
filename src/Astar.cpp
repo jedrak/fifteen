@@ -89,8 +89,6 @@ std::string Astar::explore(Graph *graph) {
         }
     }
 
-    graph->puzzle->revertInput(toProcess->path);
-
     stats.numberOfMoves = toProcess->path.size();
 
     auto end = std::chrono::steady_clock::now();

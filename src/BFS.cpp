@@ -29,7 +29,7 @@ std::string BFS::explore(Graph* graph) {
             toProcess->visited = true;
             for(auto c : checkingOrder)
             {
-                if (toProcess->getNeighbour(c))
+                if(toProcess->getNeighbour(c))
                 {
                     queue.push_back(toProcess->getNeighbour(c));
                     stats.numberOfVisited++;
@@ -37,7 +37,6 @@ std::string BFS::explore(Graph* graph) {
             }
         }
     }
-    graph->puzzle->revertInput(toProcess->path);
     stats.numberOfMoves = toProcess->path.size();
     auto end = std::chrono::steady_clock::now();
     stats.time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();

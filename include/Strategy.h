@@ -23,6 +23,7 @@ struct Stats{
 class Strategy
 {
 public:
+    unsigned int max_depth = 20;
     std::deque<Node*> queue;
     std::string checkingOrder;
     std::string strategyName;

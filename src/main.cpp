@@ -5,7 +5,7 @@
 #include "../include/DFS.h"
 #include "../include/Astar.h"
 
-#define Arguments 0
+#define Arguments 1
 
 bool char_cmp(const char* a, const char* b, uint8_t lenght)
 {
@@ -23,8 +23,6 @@ void produceSolutionFile(const std::string& name, const std::string& solution)
 
 void produceStatFile(const std::string& name, Stats stats)
 {
-    std::cout << "\n" << stats;
-
     std::fstream file;
     file.open(name, std::ios::out);
     file<<stats;
@@ -47,23 +45,20 @@ int main(int argc, const char* argv[])
     {
         /// argv[2] == Method "DRUL" .. itp
         alg = new BFS(argv[2]);
-        //std::cout<<"BFS"<<std::endl;
     }
     else if (char_cmp(argv[1], "dfs", 3))
     {
         /// argv[2] == Method "DRUL" .. itp
         alg = new DFS(argv[2]);
-        //std::cout<<"DFS"<<std::endl;
     }
     else if (char_cmp(argv[1], "astr", 4))
     {
         /// argv[2] == Method "manh" || "hamm"
         alg = new Astar(argv[2]);
-        //std::cout<<"A*"<<std::endl;
     }
     else
     {
-        std::cout<<"Fail"<<std::endl;
+        std::cerr<<"Fail"<<std::endl;
         return -3;
     }
 
@@ -76,24 +71,25 @@ int main(int argc, const char* argv[])
     //alg = new Astar("hamm");
     alg = new Astar("manh");   
 #endif
-    std::cout<<"Puzzle:"<<*p<<std::endl;
+//    std::cout<<"Puzzle:"<<*p<<std::endl<<std::endl;
 
     auto graph = new Graph(p);
-
     std::string solution = alg->explore(graph);
-    std::cout<<"Moves: "<<solution<<", moves count: "<<solution.size()<<std::endl;
 
-    p->processInput(solution);
-    std::cout<<*p;
+//    std::cout<<*p;
+//    std::cout<<std::endl;
+//    std::cout<<"Moves: "<<solution<<", moves count: "<<solution.size()<<std::endl;
+//    std::cout<<std::endl;
 
 #if Arguments
-    /// argv[4] == Solve File
-    /// argv[5] == Stats File
+    /// argv[4] == Solution File
     produceSolutionFile(argv[4], solution);
+    /// argv[5] == Stats File
     produceStatFile(argv[5], alg->stats);
 #else
     produceSolutionFile("../sol/sol.txt", solution);
     produceStatFile("../sol/stats.txt", alg->stats);
+    std::cout<<alg->stats<<std::endl;
 #endif
     return 0;
 }
