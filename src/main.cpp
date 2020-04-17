@@ -36,7 +36,7 @@ int main(int argc, const char* argv[])
 #if Arguments
     // Read the arguments
     if (argc < 6) {
-        std::cout << "Invalid argument count: " <<argc<<", expeced: 5" << std::endl;
+        std::cerr << "Invalid argument count: " <<argc<<", expeced: 5" << std::endl;
         return -1;
     }
 
@@ -66,20 +66,17 @@ int main(int argc, const char* argv[])
     auto p = new Puzzle(argv[3]);
 #else
     auto p = new Puzzle("../res/4x4_11_02048.txt");
+
     //alg = new BFS("LURD");
     //alg = new DFS("LURD");
     //alg = new Astar("hamm");
-    alg = new Astar("manh");   
-#endif
-//    std::cout<<"Puzzle:"<<*p<<std::endl<<std::endl;
+    alg = new Astar("manh");
 
+    std::cout<<"Puzzle:"<<*p<<std::endl<<std::endl;
+#endif
+    
     auto graph = new Graph(p);
     std::string solution = alg->explore(graph);
-
-//    std::cout<<*p;
-//    std::cout<<std::endl;
-//    std::cout<<"Moves: "<<solution<<", moves count: "<<solution.size()<<std::endl;
-//    std::cout<<std::endl;
 
 #if Arguments
     /// argv[4] == Solution File
@@ -87,9 +84,15 @@ int main(int argc, const char* argv[])
     /// argv[5] == Stats File
     produceStatFile(argv[5], alg->stats);
 #else
+    std::cout<<*p;
+    std::cout<<std::endl;
+    std::cout<<"Moves: "<<solution<<", moves count: "<<solution.size()<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<alg->stats<<std::endl;
+
     produceSolutionFile("../sol/sol.txt", solution);
     produceStatFile("../sol/stats.txt", alg->stats);
-    std::cout<<alg->stats<<std::endl;
 #endif
+
     return 0;
 }
