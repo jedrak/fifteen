@@ -1,7 +1,3 @@
-//
-// Created by jedra on 30.03.2020.
-//
-
 #include <utility>
 #include "../include/Node.h"
 

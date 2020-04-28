@@ -1,7 +1,3 @@
-//
-// Created by jedra on 30.03.2020.
-//
-
 #ifndef FIFTHTEEN_STRATEGY_H
 #define FIFTHTEEN_STRATEGY_H
 
@@ -33,8 +29,5 @@ public:
 
     virtual std::string explore(Graph* graph) { throw -1; };
 };
-
-
-
 
 #endif //FIFTHTEEN_STRATEGY_H

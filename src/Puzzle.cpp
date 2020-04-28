@@ -1,22 +1,16 @@
-//
-// Created by jedra on 29.03.2020.
-//
-
 #include <iostream>
 
 #include "../include/Puzzle.h"
 
 std::ostream& operator<<(std::ostream &os, const Puzzle &data) {
-    //os<<" "<<data.w<<"  "<<data.h;
     for(int i = 0; i < data.w*data.h; i++)
     {
         if(i % data.w == 0) {
             os<<"\n";
         }
-        if(data.state[i]/10 < 1) os<<" "; // to make sure it always displays pretty
+        if(data.state[i]/10 < 1) os<<" ";
         os<<data.state[i]<< " ";
     }
-    //os<<std::endl<<data.position<<std::endl;
     return os;
 }
 
@@ -65,7 +59,6 @@ short* Puzzle::move(Puzzle::Command command) {
             case Zero:
                 break;
         }
-
     }
     return state;
 }
@@ -73,7 +66,6 @@ short* Puzzle::move(Puzzle::Command command) {
 void Puzzle::processInput(const std::string& input) {
     for(char c : input){
         move(static_cast<Puzzle::Command>(c));
-
     }
 }
 
@@ -101,7 +93,7 @@ Puzzle::Puzzle(std::string path) {
 
 Puzzle::Puzzle() {
     state = new short[16];
-    for(short i = 0; i<16; i++){
+    for(short i = 0; i<16; i++) {
         state[i] = i+1;
     }
     state[position] = 0;
@@ -113,17 +105,14 @@ bool Puzzle::isSolved() {
     if(position != p.position) return false;
     for(int i = 0; i<w*h; i++)
     {
-        if(state[i] != p.state[i])
-        {
-            return false;
-        }
+        if(state[i] != p.state[i]) return false;
     }
     return true;
 }
 
-Puzzle::Puzzle(short w, short h) : w(w), h(h), position((w*h)-1){
+Puzzle::Puzzle(short w, short h) : w(w), h(h), position((w*h)-1) {
     state = new short[w*h];
-    for(short i = 0; i<w*h; i++){
+    for(short i = 0; i<w*h; i++) {
         state[i] = i+1;
     }
     state[position] = 0;
@@ -175,7 +164,3 @@ void Puzzle::revertInput(const std::string &inp) {
     std::string invPath = Puzzle::invChain(inp);
     processInput(invPath);
 }
-
-
-
-

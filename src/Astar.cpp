@@ -1,7 +1,3 @@
-//
-// Created by jaro on 02.04.2020.
-//
-
 #include <utility>
 #include <chrono>
 #include <list>

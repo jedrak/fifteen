@@ -1,14 +1,8 @@
-//
-// Created by jedra on 30.03.2020.
-//
-
 #ifndef FIFTHTEEN_NODE_H
 #define FIFTHTEEN_NODE_H
 
-
 #include <string>
 #include "../include/Puzzle.h"
-
 
 class Node {
 public:
@@ -22,6 +16,5 @@ public:
     Node();
     Node * getNeighbour(char c);
 };
-
 
 #endif //FIFTHTEEN_NODE_H

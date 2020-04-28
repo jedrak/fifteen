@@ -1,7 +1,3 @@
-//
-// Created by jedra on 30.03.2020.
-//
-
 #include <iostream>
 #include <utility>
 #include <chrono>

@@ -1,14 +1,8 @@
-//
-// Created by jedra on 29.03.2020.
-//
-
 #ifndef FIFTHTEEN_PUZZLE_H
 #define FIFTHTEEN_PUZZLE_H
 
-
 #include <sstream>
 #include <fstream>
-
 
 class Puzzle {
 public:
@@ -40,6 +34,5 @@ public:
     std::string possibleMoves();
     bool isSolved();
 };
-
 
 #endif //FIFTHTEEN_PUZZLE_H

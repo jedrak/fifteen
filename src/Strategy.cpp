@@ -1,6 +1,3 @@
-//
-// Created by jedra on 30.03.2020.
-//
 #include <utility>
 #include <fstream>
 #include "../include/Strategy.h"
